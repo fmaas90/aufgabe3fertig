@@ -1,5 +1,6 @@
 package com.mycompany.mavenproject1;
 
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.servlet.ServletException;
@@ -33,12 +34,13 @@ public class HelloWorldServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String city = req.getParameter("city");
         
         // declaring object of "OpenWeatherMap" class
         OpenWeatherMap owm = new OpenWeatherMap("d5baeddbca603edb14a2b26102719cfe");
 
         // getting current weather data for the "London" city
-        CurrentWeather cwd = owm.currentWeatherByCityName("Bochum");
+        CurrentWeather cwd = owm.currentWeatherByCityName(city);
 
         //printing city name from the retrieved data
         resp.getWriter().print("Stadt: " + cwd.getCityName());
@@ -47,9 +49,9 @@ public class HelloWorldServlet extends HttpServlet {
         resp.getWriter().print("Temperatur: " + cwd.getMainInstance().getMaxTemperature()
                             + "/" + cwd.getMainInstance().getMinTemperature() + "\'F");
         
-        resp.setStatus(200);
+        /*resp.setStatus(200);
         resp.setHeader("Content-Type", "application/json");
-        resp.getWriter().print("{\"stadt\": \"hello, world!\"}");
+        resp.getWriter().print("{\"stadt\": \"hello, world!\"}");*/
     }
 
 }
